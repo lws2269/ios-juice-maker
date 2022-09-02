@@ -32,3 +32,4 @@ class FruitStore {
         return fruitAmount
     }
 }
+

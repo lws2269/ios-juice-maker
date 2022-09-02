@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var kiwiJuiceOrderButton: UIButton!
     @IBOutlet weak var mangoJuiceOrderButton: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,67 +31,74 @@ class ViewController: UIViewController {
     }
     
     func setStockLabel() {
-        self.strawberryStockLabel.text = "\(fruitStore.fruitsStock[.strawberry] ?? 0)"
-        self.bananaStockLabel.text = "\(fruitStore.fruitsStock[.banana] ?? 0)"
-        self.pineappleStockLabel.text = "\(fruitStore.fruitsStock[.pineapple] ?? 0)"
-        self.kiwiStockLabel.text = "\(fruitStore.fruitsStock[.kiwi] ?? 0)"
-        self.mangoStockLabel.text = "\(fruitStore.fruitsStock[.mango] ?? 0)"
-    }
-    
-    func transitionView(){
-        guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditStockViewController") else { return }
-        self.present(editStockViewController, animated: true)
-    }
-    
-    func registerAlert(alertController: UIAlertController, alertAction: [UIAlertAction]){
-        alertAction.forEach { action in
-            alertController.addAction(action)
+        let fruitLabelDict: [Fruit : UILabel] = [
+            .strawberry : self.strawberryStockLabel,
+            .banana : self.bananaStockLabel,
+            .pineapple : self.pineappleStockLabel,
+            .kiwi : self.kiwiStockLabel,
+            .mango : self.mangoStockLabel,
+        ]
+        
+        do {
+            for (fruit, label) in fruitLabelDict {
+                label.text = "\(try fruitStore.fetchFruitAmount(for: fruit))"
+            }
+        } catch {
+            print(error.localizedDescription)
         }
-        self.present(alertController, animated: true)
     }
     
     @IBAction func editStockButtonTapped(_ sender: UIBarButtonItem) {
         transitionView()
     }
     
+    func transitionView(){
+        guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "EditStockViewController") else {
+            return
+        }
+        self.present(editStockViewController, animated: true)
+    }
+    
     @IBAction func orderJuiceButtonTapped(_ sender: UIButton) {
         let juiceMaker = JuiceMaker()
-    
+        
+        let JuiceButtonDict: [UIButton : Juice] = [
+            self.strawberryJuiceOrderButton : .strawberry,
+            self.bananaJuiceOrderButton : .banana,
+            self.pineappleJuiceOrderButton : .pineapple,
+            self.kiwiJuiceOrderButton : .kiwi,
+            self.mangoJuiceOrderButton : .mango,
+            self.strawberryBananaJuiceOrderButton : .strawberryBanana,
+            self.mangoKiwiJuiceOrderButton : .mangoKiwi
+        ]
+            
         do {
-            var juice: Juice?
-            
-            switch sender {
-            case strawberryJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.strawberry)
-            case bananaJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.banana)
-            case pineappleJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.pineapple)
-            case kiwiJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.kiwi)
-            case mangoJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.mango)
-            case strawberryBananaJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.strawberryBanana)
-            case mangoKiwiJuiceOrderButton:
-                juice = try juiceMaker.makeJuice(.mangoKiwi)
-            default:
-                break
+            if let juice = JuiceButtonDict[sender] {
+                try juiceMaker.makeJuice(juice)
+                alertSuccess(for: juice)
             }
-            
-            if let juice = juice {
-                let alert = UIAlertController(title: "알림", message: "\(juice.name) 쥬스 나왔습니다! 맛있게 드세요!", preferredStyle: .alert)
-                registerAlert(alertController: alert,
-                              alertAction: [UIAlertAction(title: "예", style: UIAlertAction.Style.default){ _ in self.viewDidLoad() }])
-            }
-            
         } catch {
-            let alert = UIAlertController(title: "알림", message: "\(error.localizedDescription)", preferredStyle: .alert)
-            registerAlert(alertController: alert,
-                          alertAction: [UIAlertAction(title: "아니오", style: .cancel),
-                                        UIAlertAction(title: "예", style: .default) { _ in self.transitionView() }])
+            alertFailure(for: error)
         }
         
+    }
+    
+    func alertSuccess(for juice: Juice) {
+        let alert = UIAlertController(title: "알림", message: "\(juice.name) 쥬스 나왔습니다! 맛있게 드세요!", preferredStyle: .alert)
+        let positiveAction = UIAlertAction(title: "예", style: UIAlertAction.Style.default){ _ in self.viewDidLoad() }
+        alert.addAction(positiveAction)
+        
+        self.present(alert, animated: true)
+    }
+    
+    func alertFailure(for error: Error) {
+        let alert = UIAlertController(title: "알림", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        let positiveAction = UIAlertAction(title: "예", style: .default) { _ in self.transitionView() }
+        let negativeAction = UIAlertAction(title: "아니오", style: .cancel)
+        alert.addAction(positiveAction)
+        alert.addAction(negativeAction)
+        
+        self.present(alert, animated: true)
     }
 }
 

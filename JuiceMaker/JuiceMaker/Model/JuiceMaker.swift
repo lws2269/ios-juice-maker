@@ -10,14 +10,12 @@ struct JuiceMaker {
     
     let fruitStore = FruitStore.shared
     
-    func makeJuice(_ juice: Juice) throws -> Juice {
+    func makeJuice(_ juice: Juice) throws {
         let juiceRecipe = juice.recipe
 
         try validFruitAmount(for: juiceRecipe)
         try fruitStore.useFruits(for: juiceRecipe)
         print("\(juice.name) 완성")
-        return juice
-        
     }
     
     func validFruitAmount(for recipe : [Fruit : Int]) throws {
