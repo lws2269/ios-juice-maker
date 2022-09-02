@@ -39,12 +39,11 @@ class ViewController: UIViewController {
             .mango : self.mangoStockLabel,
         ]
         
-        do {
-            for (fruit, label) in fruitLabelDict {
-                label.text = "\(try fruitStore.fetchFruitAmount(for: fruit))"
+        for (fruit, label) in fruitLabelDict {
+            guard let fruitAmount = try? fruitStore.fetchFruitAmount(for: fruit) else {
+                return
             }
-        } catch {
-            print(error.localizedDescription)
+            label.text = "\(fruitAmount)"
         }
     }
     
