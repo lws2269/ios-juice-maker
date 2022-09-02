@@ -80,7 +80,6 @@ class ViewController: UIViewController {
         } catch {
             alertFailure(for: error)
         }
-        
     }
     
     func alertSuccess(for juice: Juice) {
