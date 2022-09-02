@@ -40,10 +40,9 @@ class ViewController: UIViewController {
         ]
         
         for (fruit, label) in fruitLabelDict {
-            guard let fruitAmount = try? fruitStore.fetchFruitAmount(for: fruit) else {
-                return
+            if let fruitAmount = try? fruitStore.fetchFruitAmount(for: fruit) {
+                label.text = "\(fruitAmount)"
             }
-            label.text = "\(fruitAmount)"
         }
     }
     
