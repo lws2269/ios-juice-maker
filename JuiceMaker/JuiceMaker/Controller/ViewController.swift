@@ -46,6 +46,30 @@ class ViewController: UIViewController {
         }
     }
     
+    func alertSuccess(for juice: Juice) {
+        let alert = UIAlertController(title: "알람", message: "\(juice.name) 나왔습니다. 맛있게 드세요.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "예", style: .default))
+        
+        self.present(alert, animated: true)
+    }
+    
+    func alertFailure(for error: Error) {
+        let alert = UIAlertController(title: "알람", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "아니오", style: .cancel))
+        alert.addAction(UIAlertAction(title: "예", style: .default) { _ in self.transitionView() })
+        
+        self.present(alert, animated: true)
+    }
+    
+    func transitionView() {
+        guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "editStockViewController") as? EditStockViewController else {
+            return
+        }
+        
+        let editStockNavigationController = UINavigationController(rootViewController: editStockViewController)
+        self.present(editStockNavigationController, animated: true)
+    }
+    
     @IBAction func orderJuiceButton(_ sender: UIButton) {
         var juice: Juice?
         
@@ -69,17 +93,17 @@ class ViewController: UIViewController {
         }
         
         if let juice = juice {
-            juiceMaker.makeJuice(juice)
+            do {
+                try juiceMaker.makeJuice(juice)
+                alertSuccess(for: juice)
+            } catch {
+                alertFailure(for: error)
+            }
         }
     }
     
     @IBAction func editStockButtonTapped(_ sender: UIBarButtonItem) {
-        guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "editStockViewController") as? EditStockViewController else {
-            return
-        }
-        
-        let editStockNavigationController = UINavigationController(rootViewController: editStockViewController)
-        self.present(editStockNavigationController, animated: true)
+        transitionView()
     }
 }
 //

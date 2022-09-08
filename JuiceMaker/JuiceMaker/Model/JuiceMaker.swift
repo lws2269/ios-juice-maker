@@ -9,16 +9,11 @@ import Foundation
 struct JuiceMaker {
     let fruitStore = FruitStore()
     
-    func makeJuice(_ juice: Juice) {
+    func makeJuice(_ juice: Juice) throws {
         let juiceRecipe = juice.recipe
         
-        do {
-            try validFruitAmount(for: juiceRecipe)
-            try fruitStore.useFruits(for: juiceRecipe)
-            print("\(juice.name) 완성")
-        } catch {
-            print(error.localizedDescription)
-        }
+        try validFruitAmount(for: juiceRecipe)
+        try fruitStore.useFruits(for: juiceRecipe)
     }
     
     func validFruitAmount(for recipe : [Fruit : Int]) throws {
