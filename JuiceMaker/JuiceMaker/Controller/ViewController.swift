@@ -6,8 +6,20 @@
 
 import UIKit
 
-protocol vcDelegate {
-    func fe()
+protocol juiceMakerDelegate {
+    func changeFruits(stock: [Fruit : Int])
+}
+
+extension ViewController: juiceMakerDelegate {
+    func changeFruits(stock: [Fruit : Int]) {
+        self.strawberryLabel.text = "\(stock[.strawberry] ?? 0)"
+        self.bananaLabel.text = "\(stock[.banana] ?? 0)"
+        self.pineappleLabel.text = "\(stock[.pineapple] ?? 0)"
+        self.kiwiLabel.text = "\(stock[.kiwi] ?? 0)"
+        self.mangoLabel.text = "\(stock[.mango] ?? 0)"
+        
+        self.juiceMaker.fruitStore.fruitsStock = stock
+    }
 }
 
 class ViewController: UIViewController {
@@ -57,7 +69,7 @@ class ViewController: UIViewController {
         let alert = UIAlertController(title: "알람", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "아니오", style: .cancel))
         alert.addAction(UIAlertAction(title: "예", style: .default) { _ in self.transitionView() })
-        
+            
         self.present(alert, animated: true)
     }
     
@@ -65,6 +77,8 @@ class ViewController: UIViewController {
         guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "editStockViewController") as? EditStockViewController else {
             return
         }
+        editStockViewController.juiceMakerDelegate = self
+        editStockViewController.stock = juiceMaker.fruitStore.fruitsStock
         
         let editStockNavigationController = UINavigationController(rootViewController: editStockViewController)
         self.present(editStockNavigationController, animated: true)
@@ -96,6 +110,7 @@ class ViewController: UIViewController {
             do {
                 try juiceMaker.makeJuice(juice)
                 alertSuccess(for: juice)
+                setFruitLabel()
             } catch {
                 alertFailure(for: error)
             }
@@ -106,11 +121,4 @@ class ViewController: UIViewController {
         transitionView()
     }
 }
-//
-//extension ViewController: vcDelegate {
-//    func fe() {
-////        self.label.text = "123"
-////        juiceMaker.change()
-//    }
-//}
 
