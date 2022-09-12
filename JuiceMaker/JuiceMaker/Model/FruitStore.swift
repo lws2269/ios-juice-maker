@@ -7,7 +7,7 @@ import Foundation
 
 // 과일 저장소 타입
 class FruitStore: NSObject {
-    @objc dynamic var fruitsStock: NSMutableDictionary = [
+    @objc dynamic var fruitsStock = [
         Fruit.strawberry.rawValue : 10,
         Fruit.banana.rawValue : 10,
         Fruit.pineapple.rawValue : 10,
@@ -26,7 +26,7 @@ class FruitStore: NSObject {
         guard let fruitAmount = fruitsStock[fruit.rawValue] else {
             throw JuiceMakerError.fruitExistError
         }
-        return 0
-//        return fruitAmount as? Int ??
+        
+        return fruitAmount
     }
 }

@@ -8,6 +8,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    var observation: NSKeyValueObservation?
     let juiceMaker = JuiceMaker()
     
     @IBOutlet weak var strawberryLabel: UILabel!
@@ -27,21 +28,47 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FruitStore().a()
-        setFruitLabel()
+        observation = juiceMaker.fruitStore.observe(\.fruitsStock, options: [.initial], changeHandler: { object, change in
+            self.setFruitLabel()
+        })
     }
     
+    
     func setFruitLabel() {
-//        do {
-//            self.strawberryLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .strawberry))"
-//            self.bananaLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .banana))"
-//            self.pineappleLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .pineapple))"
-//            self.kiwiLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .kiwi))"
-//            self.mangoLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .mango))"
-//            
-//        } catch {
-//            print(error.localizedDescription)
-//        }
+        do {
+            self.strawberryLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .strawberry))"
+            self.bananaLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .banana))"
+            self.pineappleLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .pineapple))"
+            self.kiwiLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .kiwi))"
+            self.mangoLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .mango))"
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func alertSuccess(for juice: Juice) {
+        let alert = UIAlertController(title: "알림", message: "\(juice.name) 쥬스 나왔습니다! 맛있게 드세요!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "예", style: .default))
+        
+        self.present(alert, animated: true)
+    }
+    
+    func alertFailure(for error: Error) {
+        let alert = UIAlertController(title: "알림", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "아니오", style: .cancel))
+        alert.addAction(UIAlertAction(title: "예", style: .default) { _ in self.transitionView() })
+        
+        self.present(alert, animated: true)
+    }
+    
+    func transitionView(){
+        guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "editStockViewController") as? EditStockViewController else {
+            return
+        }
+        editStockViewController.fruitStore = juiceMaker.fruitStore
+        let editStockNavigationController = UINavigationController(rootViewController: editStockViewController)
+        
+        self.present(editStockNavigationController, animated: true)
     }
     
     @IBAction func orderJuiceButton(_ sender: UIButton) {
@@ -66,17 +93,17 @@ class ViewController: UIViewController {
             break
         }
         
-//        if let juice = juice {
-//            juiceMaker.makeJuice(juice)
-//        }
+        do{
+            if let juice = juice {
+                try juiceMaker.makeJuice(juice)
+                alertSuccess(for: juice)
+            }
+        }catch {
+            alertFailure(for: error)
+        }
     }
     
     @IBAction func editStockButtonTapped(_ sender: UIBarButtonItem) {
-        guard let editStockViewController = self.storyboard?.instantiateViewController(withIdentifier: "editStockViewController") as? EditStockViewController else {
-            return
-        }
-        
-        let editStockNavigationController = UINavigationController(rootViewController: editStockViewController)
-        self.present(editStockNavigationController, animated: true)
+        transitionView()
     }
 }

@@ -9,22 +9,18 @@ import Foundation
 struct JuiceMaker {
     let fruitStore = FruitStore()
     
-//    func makeJuice(_ juice: Juice) {
-//        let juiceRecipe = juice.recipe
-//
-//        do {
-//            try validFruitAmount(for: juiceRecipe)
-//            try fruitStore.useFruits(for: juiceRecipe)
-//            print("\(juice.name) 완성")
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
-//
-//    func validFruitAmount(for recipe : [Fruit : Int]) throws {
-//        for (fruit, amount) in recipe {
-//            let fruitAmount = try fruitStore.fetchFruitAmount(for: fruit)
-//            guard amount <= fruitAmount else { throw JuiceMakerError.fruitAmountError }
-//        }
-//    }
+    func makeJuice(_ juice: Juice) throws {
+        let juiceRecipe = juice.recipe
+        
+        try validFruitAmount(for: juiceRecipe)
+        try fruitStore.useFruits(for: juiceRecipe)
+        
+    }
+    
+    func validFruitAmount(for recipe : [Fruit : Int]) throws {
+        for (fruit, amount) in recipe {
+            let fruitAmount = try fruitStore.fetchFruitAmount(for: fruit)
+            guard amount <= fruitAmount else { throw JuiceMakerError.fruitAmountError }
+        }
+    }
 }

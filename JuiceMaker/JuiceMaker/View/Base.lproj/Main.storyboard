@@ -308,6 +308,9 @@
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="ZQk-f4-zrz">
                                                 <rect key="frame" x="0.0" y="120.66666666666669" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="changeFruitStock:" destination="Yu1-lM-nqp" eventType="valueChanged" id="kE2-0v-elc"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
@@ -329,6 +332,9 @@
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="O5s-2N-3iP">
                                                 <rect key="frame" x="0.0" y="120.66666666666669" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="changeFruitStock:" destination="Yu1-lM-nqp" eventType="valueChanged" id="4f2-FE-zya"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
@@ -350,6 +356,9 @@
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Rcr-xr-eqz">
                                                 <rect key="frame" x="0.0" y="120.66666666666669" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="changeFruitStock:" destination="Yu1-lM-nqp" eventType="valueChanged" id="5dh-kk-dhy"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
@@ -371,6 +380,9 @@
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="klA-59-Nu4">
                                                 <rect key="frame" x="0.0" y="120.66666666666669" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="changeFruitStock:" destination="Yu1-lM-nqp" eventType="valueChanged" id="o5G-Pi-Mvl"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
@@ -392,6 +404,9 @@
                                             </label>
                                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="xbn-6P-grO">
                                                 <rect key="frame" x="0.0" y="120.66666666666669" width="94" height="32"/>
+                                                <connections>
+                                                    <action selector="changeFruitStock:" destination="Yu1-lM-nqp" eventType="valueChanged" id="5Tt-d7-M1A"/>
+                                                </connections>
                                             </stepper>
                                         </subviews>
                                     </stackView>
@@ -412,6 +427,18 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="bananaStepper" destination="O5s-2N-3iP" id="xWi-qw-rbh"/>
+                        <outlet property="bananaStockLabel" destination="gKu-86-RhI" id="Z6s-h7-F3y"/>
+                        <outlet property="kiwiStepper" destination="klA-59-Nu4" id="d2I-up-ZlS"/>
+                        <outlet property="kiwiStockLabel" destination="ZDv-1m-HBY" id="Ghe-Jn-Jg7"/>
+                        <outlet property="mangoStepper" destination="xbn-6P-grO" id="2QR-4B-fFl"/>
+                        <outlet property="mangoStockLabel" destination="YJI-ER-LJR" id="NIM-yT-Bbs"/>
+                        <outlet property="pineappleStepper" destination="Rcr-xr-eqz" id="87J-E7-jbf"/>
+                        <outlet property="pineappleStockLabel" destination="MpT-VW-hCb" id="fxO-wP-7Be"/>
+                        <outlet property="strawberryStepper" destination="ZQk-f4-zrz" id="VQs-7S-sZU"/>
+                        <outlet property="strawberryStockLabel" destination="0yV-kn-zaT" id="Dis-gI-g8k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ieh-6D-g1l" sceneMemberID="firstResponder"/>
             </objects>
