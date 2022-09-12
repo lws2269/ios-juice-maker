@@ -6,11 +6,8 @@
 
 import UIKit
 
-protocol vcDelegate {
-    func fe()
-}
-
 class ViewController: UIViewController {
+    
     let juiceMaker = JuiceMaker()
     
     @IBOutlet weak var strawberryLabel: UILabel!
@@ -30,20 +27,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        FruitStore().a()
         setFruitLabel()
     }
     
     func setFruitLabel() {
-        do {
-            self.strawberryLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .strawberry))"
-            self.bananaLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .banana))"
-            self.pineappleLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .pineapple))"
-            self.kiwiLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .kiwi))"
-            self.mangoLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .mango))"
-            
-        } catch {
-            print(error.localizedDescription)
-        }
+//        do {
+//            self.strawberryLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .strawberry))"
+//            self.bananaLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .banana))"
+//            self.pineappleLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .pineapple))"
+//            self.kiwiLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .kiwi))"
+//            self.mangoLabel.text = "\(try juiceMaker.fruitStore.fetchFruitAmount(for: .mango))"
+//            
+//        } catch {
+//            print(error.localizedDescription)
+//        }
     }
     
     @IBAction func orderJuiceButton(_ sender: UIButton) {
@@ -68,9 +66,9 @@ class ViewController: UIViewController {
             break
         }
         
-        if let juice = juice {
-            juiceMaker.makeJuice(juice)
-        }
+//        if let juice = juice {
+//            juiceMaker.makeJuice(juice)
+//        }
     }
     
     @IBAction func editStockButtonTapped(_ sender: UIBarButtonItem) {
@@ -82,11 +80,3 @@ class ViewController: UIViewController {
         self.present(editStockNavigationController, animated: true)
     }
 }
-//
-//extension ViewController: vcDelegate {
-//    func fe() {
-////        self.label.text = "123"
-////        juiceMaker.change()
-//    }
-//}
-
