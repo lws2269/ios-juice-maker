@@ -15,7 +15,20 @@
 | <img width="180px" src="https://avatars.githubusercontent.com/u/74972815?v=4"> | <img width="180px" src="https://i.imgur.com/JqEDLOf.jpg"> |
 
 ## 3. 👩🏻‍💻 실행 화면(기능 설명)
--- 이후 추가
+엄청 빠르시네유
+### 쥬스 제조
+
+- 쥬스 제조 버튼 클릭 시 재고가 충분할 경우 쥬스를 제조하고, 재고가 부족할 경우 재고 부족 알림 (실패)를 띄웁니다.
+
+ ![](https://i.imgur.com/sACTHpG.gif)
+
+### 재고수정
+- 과일의 재고를 수정하는 부분입니다.
+ 
+ ![](https://i.imgur.com/mgXdloT.gif) 
+
+
+
 
 ## 4. **🔥 트러블 슈팅**
 
@@ -49,11 +62,20 @@
 
 두가지 방법중 1번의 단점을 좀 더 크게 보고 2번의 방법을 채택하고 싶었으나 파일의 길이가 길어지면 1의 단점이 똑같이 드러나게 된다고 생각했습니다. 2가지 방법으로도 해결을 하지 못한다 생각해서 `Struct`로 딕셔너리를 구현할 생각을 했습니다.
 `Sturct`로 구현하는 방법을 채택하여 진행하려 했지만, `Dictionary`를 사용했을 때의 로직들을 전부 리팩토링이 이루어져야해, 비효율적으로 느껴졌습니다. 그래서 `Dictionary` 값을 할당하고 있는 `fruits` 변수의 네이밍 수정을 통하여 `Dictionary`타입의 방식을 채택하기로 결정했습니다.
+## **6. 💁‍♂️추가 구현 사항**
+### `FruitStore`클래스 인스턴스의 ViewController -> EditStockViewController 데이터 전달
+- `ViewController` -> `EditStockViewController` 전달하는 부분에서 싱글톤 이외에 `Key-Value Observing(KVO)` , `delegate`패턴을 사용하여 구현해보았습니다.
+    -  Key-Value Observing(KVO) - `kvoTest` 브랜치에 구현하였습니다.
+    ⭐️[KVO 패턴 사용 브랜치](https://github.com/jjpush/ios-juice-maker/tree/kvoTest)
+    - `delegate`패턴 - `delegateTest` 브랜치에 구현하였습니다.
+    ⭐️[delegate 패턴 사용 브랜치](https://github.com/jjpush/ios-juice-maker/tree/delegateTest)
 
-
-## 6. **🔗 참고 링크**
+## 7. **🔗 참고 링크**
 [Swift Language Guide - Initialization](https://docs.swift.org/swift-book/LanguageGuide/Initialization.html)
 
 [Swift Language Guide - Error Handling](https://docs.swift.org/swift-book/LanguageGuide/ErrorHandling.html)
 
 [Swift Language Guide - AccessControl](https://docs.swift.org/swift-book/LanguageGuide/AccessControl.html)
+
+[Delegate 와 Retain Cycle](https://medium.com/macoclock/delegate-retain-cycle-in-swift-4d9c813d0544)
+
