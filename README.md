@@ -15,7 +15,6 @@
 | <img width="180px" src="https://avatars.githubusercontent.com/u/74972815?v=4"> | <img width="180px" src="https://i.imgur.com/JqEDLOf.jpg"> |
 
 ## 3. 👩🏻‍💻 실행 화면(기능 설명)
-엄청 빠르시네유
 ### 쥬스 제조
 
 - 쥬스 제조 버튼 클릭 시 재고가 충분할 경우 쥬스를 제조하고, 재고가 부족할 경우 재고 부족 알림 (실패)를 띄웁니다.
